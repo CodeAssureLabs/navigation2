@@ -12,17 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef NAV2_PLANNER__CONTROLLER_BRIDGE_HPP_
+#define NAV2_PLANNER__CONTROLLER_BRIDGE_HPP_
+
 #include <memory>
 
-#include "nav2_planner/controller_bridge.hpp"
+#include "rclcpp/rclcpp.hpp"
+#include "nav2_util/base_footprint_publisher.hpp"
 
 namespace nav2_planner
 {
 
+/**
+ * @brief Bridge between the planner server and the shared nav2_util
+ * base footprint publisher. Creates the publisher node that projects the
+ * 3D ``base_link`` frame to a 2D ``base_footprint`` frame for planning.
+ * @param options Node options forwarded to the publisher node
+ * @return The base footprint publisher node
+ */
 std::shared_ptr<nav2_util::BaseFootprintPublisher> controllerBridge(
-  const rclcpp::NodeOptions & options)
-{
-  return std::make_shared<nav2_util::BaseFootprintPublisher>(options);
-}
+  const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
 
 }  // namespace nav2_planner
+
+#endif  // NAV2_PLANNER__CONTROLLER_BRIDGE_HPP_
