@@ -1,5 +1,5 @@
 #include "nav2_planner/planner_server.hpp"
-#include "../../nav2_controller/src/controller_server.cpp"
+#include "../../nav2_util/src/base_footprint_publisher.hpp"
 
 namespace nav2_planner
 {
