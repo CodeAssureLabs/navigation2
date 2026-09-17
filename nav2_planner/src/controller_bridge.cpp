@@ -1,4 +1,4 @@
-// Copyright (c) 2023 Open Navigation LLC
+// Copyright (c) 2026 Open Navigation LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +14,15 @@
 
 #include <memory>
 
-#include "nav2_util/base_footprint_publisher.hpp"
+#include "nav2_planner/controller_bridge.hpp"
 
-int main(int argc, char ** argv)
+namespace nav2_planner
 {
-  rclcpp::init(argc, argv);
-  auto node = std::make_shared<nav2_util::BaseFootprintPublisher>();
-  rclcpp::spin(node->get_node_base_interface());
-  rclcpp::shutdown();
 
-  return 0;
+std::shared_ptr<nav2_util::BaseFootprintPublisher> controllerBridge(
+  const rclcpp::NodeOptions & options)
+{
+  return std::make_shared<nav2_util::BaseFootprintPublisher>(options);
 }
+
+}  // namespace nav2_planner
