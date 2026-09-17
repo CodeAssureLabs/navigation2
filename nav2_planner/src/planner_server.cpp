@@ -62,7 +62,16 @@ PlannerServer::~PlannerServer()
    * never called.
    */
   planners_.clear();
+  planner_hooks_.clear();
   costmap_thread_.reset();
+}
+
+void
+PlannerServer::addPlannerHook(nav2_core::PlannerHook::Ptr hook)
+{
+  if (hook) {
+    planner_hooks_.push_back(hook);
+  }
 }
 
 nav2::CallbackReturn
@@ -651,16 +660,14 @@ PlannerServer::getPlan(
     "(%.2f, %.2f).", start.pose.position.x, start.pose.position.y,
     goal.pose.position.x, goal.pose.position.y);
 
-  if (planners_.find(planner_id) != planners_.end()) {
-    return planners_[planner_id]->createPlan(start, goal, viapoints, cancel_checker);
-  } else {
+  std::string selected_planner_id = planner_id;
+  if (planners_.find(planner_id) == planners_.end()) {
     if (planners_.size() == 1 && planner_id.empty()) {
       RCLCPP_WARN_ONCE(
         get_logger(), "No planners specified in action call. "
         "Server will use only plugin %s in server."
         " This warning will appear once.", planner_ids_concat_.c_str());
-      return planners_[planners_.begin()->first]->createPlan(start, goal, viapoints,
-        cancel_checker);
+      selected_planner_id = planners_.begin()->first;
     } else {
       RCLCPP_ERROR(
         get_logger(), "planner %s is not a valid planner. "
@@ -670,7 +677,14 @@ PlannerServer::getPlan(
     }
   }
 
-  return nav_msgs::msg::Path();
+  for (auto & hook : planner_hooks_) {
+    hook->onPlanRequested(start, goal, viapoints, selected_planner_id);
+  }
+  auto path = planners_[selected_planner_id]->createPlan(start, goal, viapoints, cancel_checker);
+  for (auto & hook : planner_hooks_) {
+    hook->onPlanComputed(path, selected_planner_id);
+  }
+  return path;
 }
 
 void

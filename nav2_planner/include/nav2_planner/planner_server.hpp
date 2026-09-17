@@ -37,6 +37,7 @@
 #include "pluginlib/class_loader.hpp"
 #include "pluginlib/class_list_macros.hpp"
 #include "nav2_core/global_planner.hpp"
+#include "nav2_core/planner_hook.hpp"
 #include "nav2_msgs/srv/is_path_valid.hpp"
 #include "nav2_core/planner_exceptions.hpp"
 #include "nav2_planner/is_path_valid_service.hpp"
@@ -78,6 +79,12 @@ public:
     const std::vector<geometry_msgs::msg::PoseStamped> & viapoints,
     const std::string & planner_id,
     std::function<bool()> cancel_checker);
+
+  /**
+   * @brief Register a hook to be notified before and after every plan computation
+   * @param hook The hook to register; null hooks are ignored
+   */
+  void addPlannerHook(nav2_core::PlannerHook::Ptr hook);
 
 protected:
   /**
@@ -234,6 +241,9 @@ protected:
   PlannerMap planners_;
   pluginlib::ClassLoader<nav2_core::GlobalPlanner> gp_loader_;
   std::string planner_ids_concat_;
+
+  // Hooks notified around each plan computation
+  std::vector<nav2_core::PlannerHook::Ptr> planner_hooks_;
 
   // TF buffer
   nav2::TransformBuffer::SharedPtr tf_;
