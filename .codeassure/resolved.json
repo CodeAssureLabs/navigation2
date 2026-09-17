@@ -1,0 +1,185 @@
+{
+  "artifact_version": 1,
+  "source_manifest_version": 1,
+  "layer_map": {},
+  "path_globs": [
+    {
+      "glob": "nav2_bringup/**",
+      "layer": "entry"
+    },
+    {
+      "glob": "nav2_simple_commander/**",
+      "layer": "entry"
+    },
+    {
+      "glob": "nav2_rviz_plugins/**",
+      "layer": "entry"
+    },
+    {
+      "glob": "nav2_system_tests/**",
+      "layer": "entry"
+    },
+    {
+      "glob": "nav2_bt_navigator/**",
+      "layer": "api"
+    },
+    {
+      "glob": "nav2_behavior_tree/**",
+      "layer": "api"
+    },
+    {
+      "glob": "nav2_docking/opennav_docking_bt/**",
+      "layer": "api"
+    },
+    {
+      "glob": "tools/**",
+      "layer": "utils"
+    },
+    {
+      "glob": "nav2_planner/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_navfn_planner/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_smac_planner/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_theta_star_planner/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_dwb_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_mppi_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_regulated_pure_pursuit_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_rotation_shim_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_graceful_controller/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_smoother/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_constrained_smoother/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_behaviors/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_route/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_docking/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_following/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_collision_monitor/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_velocity_smoother/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_amcl/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_map_server/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_waypoint_follower/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_lifecycle_manager/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_loopback_sim/**",
+      "layer": "service"
+    },
+    {
+      "glob": "nav2_core/**",
+      "layer": "domain"
+    },
+    {
+      "glob": "nav2_costmap_2d/**",
+      "layer": "domain"
+    },
+    {
+      "glob": "nav2_voxel_grid/**",
+      "layer": "domain"
+    },
+    {
+      "glob": "nav2_common/**",
+      "layer": "utils"
+    },
+    {
+      "glob": "nav2_util/**",
+      "layer": "utils"
+    },
+    {
+      "glob": "nav2_ros_common/**",
+      "layer": "utils"
+    },
+    {
+      "glob": "nav2_msgs/**",
+      "layer": "utils"
+    }
+  ],
+  "compiled_rules": {
+    "allowed": {
+      "entry": [
+        "api",
+        "service",
+        "domain",
+        "utils",
+        "config"
+      ],
+      "api": [
+        "service",
+        "domain",
+        "utils",
+        "config"
+      ],
+      "service": [
+        "domain",
+        "utils",
+        "config"
+      ],
+      "domain": [
+        "utils",
+        "config"
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+schema_version: 1
+manifest_version: 1
+repo: CodeAssureLabs/navigation2
+layers:
+  entry: [api, service, domain]
+  api: [service, domain]
+  service: [domain]
+  domain: []
+cross_cutting: [utils, config]
+forbidden_edges:
+  - id: core-no-plugins
+    from: domain
+    to: service
+    reason: "nav2_core / nav2_costmap_2d define the plugin interfaces; they must not include a concrete planner, controller or behavior package"
+    check: blocking
+    severity: high
+  - id: plugins-no-bt
+    from: service
+    to: api
+    reason: "planner/controller/behavior servers are driven by the BT navigator, never the other way round"
+    check: blocking
+    severity: high
+  - id: bt-no-bringup
+    from: api
+    to: entry
+    reason: "nav2_behavior_tree / nav2_bt_navigator must not include bringup, rviz or system-test code"
+    check: blocking
+    severity: high
+required_companions:
+  - id: planner-plugin-needs-test
+    when: "nav2_*_planner/src/*.cpp"
+    require: ["nav2_*_planner/test/**/*.cpp"]
+    reason: "a new or changed planner plugin needs a unit test in its package"
+    check: detect_only
+invariants:
+  - id: no-raw-thread-in-costmap
+    within: "nav2_costmap_2d/**"
+    forbid_pattern: '\bstd::thread\b'
+    reason: "costmap layers run on the node executor, never on raw std::thread"
+    check: detect_only
+  - id: no-printf-in-planners
+    within: "nav2_*planner*/src/**"
+    forbid_pattern: '\b(printf|std::cout)\b'
+    reason: "use RCLCPP_* logging, not stdout"
+    check: detect_only
