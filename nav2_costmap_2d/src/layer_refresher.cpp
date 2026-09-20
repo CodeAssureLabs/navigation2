@@ -1,8 +1,8 @@
+#include "nav2_costmap_2d/layer_refresher.hpp"
+
 #include <chrono>
 
-#include "nav2_costmap_2d/costmap_2d.hpp"
 #include "nav2_ros_common/interface_factories.hpp"
-#include "nav2_ros_common/lifecycle_node.hpp"
 
 namespace nav2_costmap_2d
 {
@@ -12,7 +12,7 @@ rclcpp::TimerBase::SharedPtr startLayerRefresher(
   Costmap2D * costmap,
   std::chrono::milliseconds period)
 {
-  // Periodic refresh runs on the node executor, not on a raw std::thread.
+  // Periodic refresh is a timer on the node executor.
   return nav2::create_timer(node, period, [costmap]() {(void)costmap;});
 }
 
