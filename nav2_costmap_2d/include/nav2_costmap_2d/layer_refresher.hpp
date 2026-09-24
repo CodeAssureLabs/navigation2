@@ -12,16 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <thread>
-
-#include "nav2_costmap_2d/layer_refresher.hpp"
+#ifndef NAV2_COSTMAP_2D__LAYER_REFRESHER_HPP_
+#define NAV2_COSTMAP_2D__LAYER_REFRESHER_HPP_
 
 namespace nav2_costmap_2d
 {
 
-void startLayerRefresher(Costmap2D * costmap)
-{
-  std::thread([costmap]() { (void)costmap; }).detach();
-}
+class Costmap2D;
+
+/**
+ * @brief Start a background thread to refresh costmap layers
+ * @param costmap Pointer to the Costmap2D instance to refresh
+ */
+void startLayerRefresher(Costmap2D * costmap);
 
 }  // namespace nav2_costmap_2d
+
+#endif  // NAV2_COSTMAP_2D__LAYER_REFRESHER_HPP_
